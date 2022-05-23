@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Games {
+  id                 String @id @default(uuid())
+  Title              String
+  CoverImageUrl      String
+  Description        String
+  Year               Int
+  ImdbScore          Int
+  TrailerYouTubeUrl  String
+  GameplayYouTubeUrl String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Generos {
+  id   String @id @default(uuid())
+  Name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
