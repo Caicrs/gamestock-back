@@ -1,13 +1,7 @@
-/* 
 import { PartialType } from '@nestjs/mapped-types';
 
-import { CreateGamesDto } from './create-game.dto';
+import { CreateGeneroDto } from './create-genero.dto';
 
-
-export class UpdateGamesDto extends PartialType(CreateGamesDto) {
-  titulo: string;
-  categoria: number;
-  preco: number;
-  plataforma: boolean;
+export class UpdateGeneroDto extends PartialType(CreateGeneroDto) {
+  Name: string;
 }
-*/

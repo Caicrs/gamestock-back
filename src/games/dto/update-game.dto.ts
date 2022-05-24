@@ -1,13 +1,13 @@
-/* 
 import { PartialType } from '@nestjs/mapped-types';
 
 import { CreateGamesDto } from './create-game.dto';
 
-
 export class UpdateGamesDto extends PartialType(CreateGamesDto) {
-  titulo: string;
-  categoria: number;
-  preco: number;
-  plataforma: boolean;
+  Title: string;
+  CoverImageUrl: string;
+  Description: string;
+  Year: number;
+  ImdbScore: number;
+  TrailerYouTubeUrl: string;
+  GameplayYouTubeUrl: string;
 }
-*/
