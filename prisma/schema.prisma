@@ -17,14 +17,82 @@ model Games {
   TrailerYouTubeUrl  String
   GameplayYouTubeUrl String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  ProfileGames ProfileGames[]
+  GamesGeneros GamesGeneros[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("games")
 }
 
 model Generos {
   id   String @id @default(uuid())
   Name String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  GamesGeneros GamesGeneros[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("generos")
+}
+
+model User {
+  id       String  @id @default(uuid())
+  Name     String
+  Email    String
+  Password String
+  Cpf      String
+  IsAdmin  Boolean
+
+  Profiles Profile[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("user")
+}
+
+model Profile {
+  id String @id @default(uuid())
+
+  Title    String
+  ImageUrl String
+
+  User   User   @relation(fields: [UserId], references: [id])
+  UserId String @map("user_id")
+
+  ProfileGames ProfileGames[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("profile")
+}
+
+model ProfileGames {
+  id String @id @default(uuid())
+
+  Profile   Profile? @relation(fields: [ProfileId], references: [id])
+  ProfileId String?  @map("profile_id")
+
+  Games   Games?  @relation(fields: [GamesId], references: [id])
+  GamesId String? @map("games_id")
+
+  @@unique([ProfileId, GamesId])
+  @@map("profile_games")
+}
+
+model GamesGeneros {
+  id String @id @default(uuid())
+
+  Generos   Generos? @relation(fields: [GenerosId], references: [id])
+  GenerosId String?  @map("profile_id")
+
+  Games   Games?  @relation(fields: [GamesId], references: [id])
+  GamesId String? @map("games_id")
+
+  @@unique([GenerosId, GamesId])
+  @@map("generos_games")
 }

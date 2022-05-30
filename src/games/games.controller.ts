@@ -33,7 +33,7 @@ export class GamesController {
     summary: 'Visualizar o game selecionado',
   })
   findOne(@Param('id') id: string): Promise<Games> {
-    return this.gamesService.findOne(id);
+    return this.gamesService.findById(id);
   }
 
   @Post()

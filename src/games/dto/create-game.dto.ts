@@ -8,9 +8,10 @@ export class CreateGamesDto {
   @ApiProperty({
     description: 'O game criado',
     example: {
-      titulo: 'Gta V',
-      preco: 200,
-      plataforma: 'Playstation 5',
+      Title: 'Gta V',
+      CoverImageUrl: 'https://image_url',
+      Description: 'Descrição aqui',
+      Year: 2010,
     },
   })
   Title: string;

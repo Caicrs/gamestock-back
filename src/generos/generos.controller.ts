@@ -13,7 +13,6 @@ import { CreateGeneroDto } from './dto/create-genero.dto';
 import { GeneroService } from './generos.service';
 import { UpdateGeneroDto } from './dto/update-genero.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Genero } from './entities/genero.entity';
 
 @ApiTags('generos')
 @Controller('generos')
@@ -30,10 +29,10 @@ export class GeneroController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Visualizar o genero selecionado',
+    summary: 'Visualizar um genero pelo ID',
   })
-  findOne(@Param('id') id: string): Promise<Genero> {
-    return this.generosService.findOne(id);
+  findOne(@Param('id') id: string) {
+    return this.generosService.findById(id);
   }
 
   @Post()
@@ -46,19 +45,16 @@ export class GeneroController {
 
   @Patch(':id')
   @ApiOperation({
-    summary: 'Editar o genero selecionado',
+    summary: 'Editar um genero pelo ID',
   })
-  update(
-    @Param('id') id: string,
-    @Body() dto: UpdateGeneroDto,
-  ): Promise<Genero> {
-    return this.generosService.update(id, dto);
+  update(@Param('id') id: string, @Body() updateGenerosDto: UpdateGeneroDto) {
+    return this.generosService.update(id, updateGenerosDto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
-    summary: 'Remover o genero selecionado',
+    summary: 'Remover um genero pelo ID',
   })
   delete(@Param('id') id: string) {
     this.generosService.delete(id);

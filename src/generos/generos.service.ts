@@ -1,41 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateGeneroDto } from './dto/create-genero.dto';
 import { UpdateGeneroDto } from './dto/update-genero.dto';
-import { Genero } from './entities/genero.entity';
 
 @Injectable()
 export class GeneroService {
-  constructor(private readonly prisma: PrismaService) {}
-
   async delete(id: string) {
     await this.findById(id);
 
     await this.prisma.generos.delete({ where: { id } });
   }
 
-  findAll(): Promise<Genero[]> {
-    return this.prisma.generos.findMany();
-  }
-
-  async findById(id: string): Promise<Genero> {
-    const record = await this.prisma.generos.findUnique({ where: { id } });
-
-    if (!record) {
-      throw new NotFoundException(`Registro com o '${id}' não encontrado.`);
-    }
-
-    return record;
-  }
-
-  async findOne(id: string): Promise<Genero> {
-    return this.findById(id);
-  }
-
-  async update(id: string, dto: UpdateGeneroDto): Promise<Genero> {
+  async update(id: string, dto: UpdateGeneroDto) {
     await this.findById(id);
 
-    const data: Partial<Genero> = { ...dto };
+    const data: Prisma.GenerosUpdateInput = { ...dto };
 
     return this.prisma.generos.update({
       where: { id },
@@ -43,10 +23,51 @@ export class GeneroService {
     });
   }
 
-  create(dto: CreateGeneroDto): Promise<Genero> {
-    const data: Genero = { ...dto };
+  constructor(private readonly prisma: PrismaService) {}
 
-    return this.prisma.generos.create({ data }).catch(this.handleError);
+  private generosSelect = {
+    id: true,
+    Name: true,
+  };
+
+  async findById(id: string) {
+    const record = await this.prisma.generos.findUnique({
+      where: { id },
+      select: this.generosSelect,
+    });
+
+    if (!record) {
+      throw new NotFoundException(`Registro com o ID '${id}' não encontrado.`);
+    }
+
+    return record;
+  }
+
+  findAll() {
+    return this.prisma.generos.findMany({
+      select: this.generosSelect,
+    });
+  }
+
+  create(createGeneroDto: CreateGeneroDto) {
+    const data: Prisma.GenerosCreateInput = {
+      Name: createGeneroDto.Name,
+      GamesGeneros: {
+        create: {
+          GamesId: createGeneroDto.gameId,
+        },
+      },
+    };
+
+    return this.prisma.generos
+      .create({
+        data,
+        select: {
+          id: true,
+          Name: true,
+        },
+      })
+      .catch(this.handleError);
   }
 
   handleError(error: Error) {

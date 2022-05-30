@@ -8,8 +8,9 @@ export class CreateGeneroDto {
   @ApiProperty({
     description: 'O game criado',
     example: {
-      genero: 'Gta V',
+      Name: 'Genero aqui',
     },
   })
   Name: string;
+  gameId?: string[];
 }

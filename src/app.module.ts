@@ -5,9 +5,13 @@ import { GamesModule } from './games/games.module';
 import { GeneroModule } from './generos/generos.module';
 import { PrismaService } from './prisma/prisma.service';
 import { PrismaModule } from './prisma/prisma.module';
+import { UserModule } from './user/user.module';
+import { ProfileModule } from './profile/profile.module';
+import { GamesGenerosModule } from './games_generos/games_generos.module';
+import { ProfileGamesModule } from './profile_games/profile_games.module';
 
 @Module({
-  imports: [GamesModule, GeneroModule, PrismaModule],
+  imports: [GamesModule, GeneroModule, PrismaModule, UserModule, ProfileModule, GamesGenerosModule, ProfileGamesModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
