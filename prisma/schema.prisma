@@ -41,7 +41,7 @@ model Generos {
 model User {
   id       String  @id @default(uuid())
   Name     String
-  Email    String
+  Email    String  @unique
   Password String
   Cpf      String
   IsAdmin  Boolean

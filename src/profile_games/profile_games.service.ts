@@ -29,6 +29,7 @@ export class ProfileGamesService {
   create(createProfileGameDto: CreateProfileGameDto) {
     const data: Prisma.ProfileGamesCreateInput = {
       Profile: { connect: { id: createProfileGameDto.Profile } },
+      Games: { connect: { id: createProfileGameDto.Games } },
     };
 
     return this.prisma.profileGames
