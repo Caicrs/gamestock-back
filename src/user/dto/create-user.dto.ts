@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
+  IsNumber,
   IsString,
   IsUrl,
   Matches,
@@ -39,7 +40,7 @@ export class CreateUserDto {
   })
   Email: string;
 
-  @IsUrl()
+  @IsString()
   @ApiProperty({
     description: 'Cpf do usuário',
     example: '032.156.627-10',

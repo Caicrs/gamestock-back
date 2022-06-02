@@ -10,6 +10,7 @@ import { ProfileModule } from './profile/profile.module';
 import { GamesGenerosModule } from './games_generos/games_generos.module';
 import { ProfileGamesModule } from './profile_games/profile_games.module';
 import { AuthModule } from './auth/auth.module';
+import { CaslModule } from './casl/casl.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
     GamesGenerosModule,
     ProfileGamesModule,
     AuthModule,
+    CaslModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

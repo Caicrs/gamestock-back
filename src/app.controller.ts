@@ -11,13 +11,4 @@ export class AppController {
   getAppStatus(): string {
     return this.appService.getAppStatus();
   }
-
-  @Get()
-  @ApiOperation({
-    summary: 'Visualizar Homepage',
-  })
-  @Get()
-  findAll() {
-    return this.appService.findAll();
-  }
 }

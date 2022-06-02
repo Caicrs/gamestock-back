@@ -8,56 +8,110 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  UseGuards,
+  ForbiddenException,
 } from '@nestjs/common';
 import { ProfileGamesService } from './profile_games.service';
 import { CreateProfileGameDto } from './dto/create-profile_game.dto';
 import { UpdateProfileGameDto } from './dto/update-profile_game.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { LoggedUser } from 'src/auth/logged-user-decorator';
+import { User } from 'src/user/entities/user.entity';
+import { Action } from 'src/casl/enum';
+import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 
 @ApiTags('profile-games')
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 @Controller('profile-games')
 export class ProfileGamesController {
-  constructor(private readonly profileGamesService: ProfileGamesService) {}
+  constructor(
+    private readonly profileGamesService: ProfileGamesService,
+    private caslAbilityFactory: CaslAbilityFactory,
+  ) {}
 
   @Post()
-  create(@Body() createProfileGameDto: CreateProfileGameDto) {
+  @ApiOperation({
+    summary: 'Criar relação entre GAMES X PROFILES | APENAS ADMINS',
+  })
+  create(
+    @Body() createProfileGameDto: CreateProfileGameDto,
+    @LoggedUser() user: User,
+  ) {
+    const ability = this.caslAbilityFactory.createForUser(user);
+    const isAllowed = ability.can(Action.Create, user);
+    if (!isAllowed) {
+      throw new ForbiddenException('Apenas ADMINS');
+    }
     return this.profileGamesService.create(createProfileGameDto);
   }
 
   @Get()
   @ApiOperation({
-    summary: 'Visualizar todas as relações GAMES X PROFILES',
+    summary: 'HOMEPAGE',
   })
   @Get()
-  findAll() {
+  Homepage(@LoggedUser() user: User) {
+    const userId = user.id;
+    return this.profileGamesService.homepage(userId);
+  }
+
+  @Get()
+  @ApiOperation({
+    summary: 'Visualizar todas as relações GAMES X PROFILES | APENAS ADMINS',
+  })
+  @Get()
+  findAll(@LoggedUser() user: User) {
+    const ability = this.caslAbilityFactory.createForUser(user);
+    const isAllowed = ability.can(Action.Create, user);
+    if (!isAllowed) {
+      throw new ForbiddenException('Apenas ADMINS');
+    }
     return this.profileGamesService.findAll();
   }
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Visualizar uma relação pelo ID',
+    summary: 'Visualizar uma relação pelo ID | APENAS ADMINS',
   })
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string, @LoggedUser() user: User) {
+    const ability = this.caslAbilityFactory.createForUser(user);
+    const isAllowed = ability.can(Action.Create, user);
+    if (!isAllowed) {
+      throw new ForbiddenException('Apenas ADMINS');
+    }
     return this.profileGamesService.findOne(id);
   }
 
   @Patch(':id')
   @ApiOperation({
-    summary: 'Editar uma relação pelo ID',
+    summary: 'Editar uma relação pelo ID | APENAS ADMINS',
   })
   update(
     @Param('id') id: string,
     @Body() updateProfileGameDto: UpdateProfileGameDto,
+    @LoggedUser() user: User,
   ) {
+    const ability = this.caslAbilityFactory.createForUser(user);
+    const isAllowed = ability.can(Action.Create, user);
+    if (!isAllowed) {
+      throw new ForbiddenException('Apenas ADMINS');
+    }
     return this.profileGamesService.update(id, updateProfileGameDto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
-    summary: 'Remover uma relação pelo ID',
+    summary: 'Remover uma relação pelo ID | APENAS ADMINS',
   })
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string, @LoggedUser() user: User) {
+    const ability = this.caslAbilityFactory.createForUser(user);
+    const isAllowed = ability.can(Action.Create, user);
+    if (!isAllowed) {
+      throw new ForbiddenException('Apenas ADMINS');
+    }
     return this.profileGamesService.remove(id);
   }
 }

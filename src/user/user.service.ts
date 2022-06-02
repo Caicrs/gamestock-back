@@ -7,24 +7,18 @@ import {
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserService {
+  constructor(private readonly prisma: PrismaService) {}
+
   async update(id: string, dto: UpdateUserDto) {
-    if (dto.Password != dto.confirmPassword) {
-      throw new BadRequestException('As senhas informadas não são iguais.');
-    }
-
-    delete dto.confirmPassword;
-
     await this.findById(id);
 
     const data: Prisma.UserUpdateInput = {
       ...dto,
-      Password: await bcrypt.hash(dto.Password, 10),
     };
 
     return this.prisma.user.update({
@@ -63,8 +57,6 @@ export class UserService {
     createdAt: true,
     updatedAt: true,
   };
-
-  constructor(private readonly prisma: PrismaService) {}
 
   findAll() {
     return this.prisma.user.findMany({

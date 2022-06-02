@@ -8,16 +8,30 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  UseGuards,
+  Req,
+  ForbiddenException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
+import { Action } from 'src/casl/enum';
+import { ForbiddenError } from '@casl/ability';
+import { LoggedUser } from 'src/auth/logged-user-decorator';
+import { User } from '@prisma/client';
 
 @ApiTags('user')
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private caslAbilityFactory: CaslAbilityFactory,
+  ) {}
 
   @Post()
   @ApiOperation({
@@ -29,9 +43,14 @@ export class UserController {
 
   @Get()
   @ApiOperation({
-    summary: 'Listar todos os usuários',
+    summary: 'Listar todos os usuários | APENAS ADMINS',
   })
-  findAll() {
+  findAll(@LoggedUser() user: User) {
+    const ability = this.caslAbilityFactory.createForUser(user);
+    const isAllowed = ability.can(Action.Create, user);
+    if (!isAllowed) {
+      throw new ForbiddenException('Apenas ADMINS');
+    }
     return this.userService.findAll();
   }
 

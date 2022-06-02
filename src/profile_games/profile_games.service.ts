@@ -6,6 +6,17 @@ import { UpdateProfileGameDto } from './dto/update-profile_game.dto';
 
 @Injectable()
 export class ProfileGamesService {
+  async homepage(id: string) {
+    const record = await this.prisma.profileGames.findUnique({
+      where: { id },
+    });
+
+    if (!record) {
+      throw new NotFoundException(`Registro com o ID '${id}' não encontrado.`);
+    }
+
+    return record;
+  }
   async remove(id: string) {
     await this.findById(id);
 

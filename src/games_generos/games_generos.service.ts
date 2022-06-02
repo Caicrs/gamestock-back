@@ -11,8 +11,8 @@ export class GamesGenerosService {
     return this.prisma.gamesGeneros.findMany({
       select: {
         id: true,
-        GamesId: true,
-        GenerosId: true,
+        Games: { select: { Title: true } },
+        Generos: { select: { Name: true } },
       },
     });
   }
