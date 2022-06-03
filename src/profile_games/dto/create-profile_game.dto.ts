@@ -8,6 +8,6 @@ export class CreateProfileGameDto {
       Games: 'ID de um game VÁLIDO !',
     },
   })
-  Profile?: string[];
-  Games?: string[];
+  Profile?: string;
+  Games?: string;
 }

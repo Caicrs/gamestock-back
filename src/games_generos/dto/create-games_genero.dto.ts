@@ -8,6 +8,6 @@ export class CreateGamesGeneroDto {
       GamesId: 'ID de um game VÁLIDO !',
     },
   })
-  GenerosId?: string[];
-  GamesId: string[];
+  GenerosId: string;
+  GamesId: string;
 }

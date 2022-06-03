@@ -87,4 +87,20 @@ export class GamesGenerosController {
     }
     return this.gamesGenerosService.remove(id);
   }
+
+  @Post()
+  @ApiOperation({
+    summary: 'Criar nova relação | APENAS ADMINS',
+  })
+  create(
+    @Body() createGamesGeneroDto: CreateGamesGeneroDto,
+    @LoggedUser() user: User,
+  ) {
+    const ability = this.caslAbilityFactory.createForUser(user);
+    const isAllowed = ability.can(Action.Create, user);
+    if (!isAllowed) {
+      throw new ForbiddenException('Apenas ADMINS');
+    }
+    return this.gamesGenerosService.create(createGamesGeneroDto);
+  }
 }

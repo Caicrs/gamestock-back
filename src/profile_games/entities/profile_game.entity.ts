@@ -1,5 +1,5 @@
 export class ProfileGame {
   id?: string;
-  Profile?: string[];
+  Profile?: string;
   Games?: string[];
 }

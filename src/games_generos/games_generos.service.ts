@@ -6,6 +6,23 @@ import { UpdateGamesGeneroDto } from './dto/update-games_genero.dto';
 
 @Injectable()
 export class GamesGenerosService {
+  create(createGamesGeneroDto: CreateGamesGeneroDto) {
+    const data: Prisma.GamesGenerosCreateInput = {
+      Games: { connect: { id: createGamesGeneroDto.GamesId } },
+      Generos: { connect: { id: createGamesGeneroDto.GenerosId } },
+    };
+
+    return this.prisma.gamesGeneros
+      .create({
+        data,
+        select: {
+          id: true,
+          Games: { select: { Title: true } },
+          Generos: { select: { Name: true } },
+        },
+      })
+      .catch(this.handleError);
+  }
   constructor(private readonly prisma: PrismaService) {}
   findAll() {
     return this.prisma.gamesGeneros.findMany({

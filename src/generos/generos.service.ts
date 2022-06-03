@@ -52,11 +52,6 @@ export class GeneroService {
   create(createGeneroDto: CreateGeneroDto) {
     const data: Prisma.GenerosCreateInput = {
       Name: createGeneroDto.Name,
-      GamesGeneros: {
-        create: {
-          GamesId: createGeneroDto.gameId,
-        },
-      },
     };
 
     return this.prisma.generos

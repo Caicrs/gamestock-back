@@ -12,6 +12,9 @@ export class CreateGamesDto {
       CoverImageUrl: 'https://image_url',
       Description: 'Descrição aqui',
       Year: 2010,
+      ImdbScore: 5,
+      TrailerYouTubeUrl: 'YOUTUBE_URL',
+      GameplayYouTubeUrl: 'YOUTUBE_URL',
     },
   })
   Title: string;
