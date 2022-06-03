@@ -1,7 +1,7 @@
 {
     "version": 2,
     "env": {
-        "DB_URI": "@gamestock_api_uri"
+        "DATABASE_URL": "@gamestock_api_uri"
     },
     "builds": [
         {
