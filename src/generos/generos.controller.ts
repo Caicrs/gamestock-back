@@ -33,14 +33,9 @@ export class GeneroController {
 
   @Get()
   @ApiOperation({
-    summary: 'Visualizar todos os generos | APENAS ADMINS',
+    summary: 'Visualizar todos os generos ',
   })
-  findAll(@LoggedUser() user: User) {
-    const ability = this.caslAbilityFactory.createForUser(user);
-    const isAllowed = ability.can(Action.Create, user);
-    if (!isAllowed) {
-      throw new ForbiddenException('Apenas ADMINS');
-    }
+  findAll() {
     return this.generosService.findAll();
   }
 

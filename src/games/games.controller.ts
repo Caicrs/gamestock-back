@@ -36,14 +36,9 @@ export class GamesController {
 
   @Get()
   @ApiOperation({
-    summary: 'Visualizar todos games | APENAS ADMINS',
+    summary: 'Visualizar todos games ',
   })
-  findAll(@LoggedUser() user: User) {
-    const ability = this.caslAbilityFactory.createForUser(user);
-    const isAllowed = ability.can(Action.Create, user);
-    if (!isAllowed) {
-      throw new ForbiddenException('Apenas ADMINS');
-    }
+  findAll() {
     return this.gamesService.findAll();
   }
 

@@ -33,7 +33,7 @@ export class ProfileController {
 
   @Post()
   @ApiOperation({
-    summary: 'Criar novo perfil | APENAS ADMINS',
+    summary: 'Criar novo perfil ',
   })
   create(@Body() createProfileDto: CreateProfileDto, @LoggedUser() user: User) {
     const ability = this.caslAbilityFactory.createForUser(user);
@@ -48,18 +48,13 @@ export class ProfileController {
   @ApiOperation({
     summary: 'Visualizar todos os perfis | APENAS ADMINS',
   })
-  findAll(@LoggedUser() user: User) {
-    const ability = this.caslAbilityFactory.createForUser(user);
-    const isAllowed = ability.can(Action.Create, user);
-    if (!isAllowed) {
-      throw new ForbiddenException('Apenas ADMINS');
-    }
+  findAll() {
     return this.profileService.findAll();
   }
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Visualizar um perfil pelo ID | APENAS ADMINS',
+    summary: 'Visualizar um perfil pelo ID ',
   })
   findOne(@Param('id') id: string, @LoggedUser() user: User) {
     const ability = this.caslAbilityFactory.createForUser(user);
@@ -72,7 +67,7 @@ export class ProfileController {
 
   @Patch(':id')
   @ApiOperation({
-    summary: 'Editar um perfil pelo ID | APENAS ADMINS',
+    summary: 'Editar um perfil pelo ID ',
   })
   update(
     @Param('id') id: string,
@@ -90,7 +85,7 @@ export class ProfileController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
-    summary: 'Remover um perfil pelo ID | APENAS ADMINS',
+    summary: 'Remover um perfil pelo ID ',
   })
   remove(@Param('id') id: string, @LoggedUser() user: User) {
     const ability = this.caslAbilityFactory.createForUser(user);

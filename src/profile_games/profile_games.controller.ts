@@ -33,33 +33,15 @@ export class ProfileGamesController {
 
   @Post()
   @ApiOperation({
-    summary: 'Criar relação entre GAMES X PROFILES | APENAS ADMINS',
+    summary: 'Criar relação entre GAMES X PROFILES ',
   })
-  create(
-    @Body() createProfileGameDto: CreateProfileGameDto,
-    @LoggedUser() user: User,
-  ) {
-    const ability = this.caslAbilityFactory.createForUser(user);
-    const isAllowed = ability.can(Action.Create, user);
-    if (!isAllowed) {
-      throw new ForbiddenException('Apenas ADMINS');
-    }
+  create(@Body() createProfileGameDto: CreateProfileGameDto) {
     return this.profileGamesService.create(createProfileGameDto);
   }
 
   @Get()
   @ApiOperation({
-    summary: 'HOMEPAGE',
-  })
-  @Get()
-  Homepage(@LoggedUser() user: User) {
-    const userId = user.id;
-    return this.profileGamesService.homepage(userId);
-  }
-
-  @Get()
-  @ApiOperation({
-    summary: 'Visualizar todas as relações GAMES X PROFILES | APENAS ADMINS',
+    summary: 'Visualizar todas as relações GAMES X PROFILES | APENAS ADMINS ',
   })
   @Get()
   findAll(@LoggedUser() user: User) {
@@ -73,45 +55,29 @@ export class ProfileGamesController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Visualizar uma relação pelo ID | APENAS ADMINS',
+    summary: 'Visualizar uma relação pelo ID ',
   })
-  findOne(@Param('id') id: string, @LoggedUser() user: User) {
-    const ability = this.caslAbilityFactory.createForUser(user);
-    const isAllowed = ability.can(Action.Create, user);
-    if (!isAllowed) {
-      throw new ForbiddenException('Apenas ADMINS');
-    }
+  findOne(@Param('id') id: string) {
     return this.profileGamesService.findOne(id);
   }
 
   @Patch(':id')
   @ApiOperation({
-    summary: 'Editar uma relação pelo ID | APENAS ADMINS',
+    summary: 'Editar uma relação pelo ID ',
   })
   update(
     @Param('id') id: string,
     @Body() updateProfileGameDto: UpdateProfileGameDto,
-    @LoggedUser() user: User,
   ) {
-    const ability = this.caslAbilityFactory.createForUser(user);
-    const isAllowed = ability.can(Action.Create, user);
-    if (!isAllowed) {
-      throw new ForbiddenException('Apenas ADMINS');
-    }
     return this.profileGamesService.update(id, updateProfileGameDto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
-    summary: 'Remover uma relação pelo ID | APENAS ADMINS',
+    summary: 'Remover uma relação pelo ID ',
   })
-  remove(@Param('id') id: string, @LoggedUser() user: User) {
-    const ability = this.caslAbilityFactory.createForUser(user);
-    const isAllowed = ability.can(Action.Create, user);
-    if (!isAllowed) {
-      throw new ForbiddenException('Apenas ADMINS');
-    }
+  remove(@Param('id') id: string) {
     return this.profileGamesService.remove(id);
   }
 }
