@@ -1,15 +1,14 @@
 {
   "name": "back-gamestock",
   "version": "0.0.1",
-  "engines" : { 
-    "npm" : ">=6.14.9",
-    "node" : ">=16.3.2"
+  "engines": {
+    "npm": ">=6.14.9",
+    "node": ">=16.3.2"
   },
   "description": "",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -91,5 +90,4 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
-  
 }
