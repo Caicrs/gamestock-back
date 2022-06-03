@@ -24,8 +24,6 @@ import { LoggedUser } from 'src/auth/logged-user-decorator';
 import { User } from '@prisma/client';
 
 @ApiTags('user')
-@UseGuards(AuthGuard())
-@ApiBearerAuth()
 @Controller('user')
 export class UserController {
   constructor(
@@ -42,6 +40,8 @@ export class UserController {
   }
 
   @Get()
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Listar todos os usuários | APENAS ADMINS',
   })
@@ -55,6 +55,8 @@ export class UserController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Visualizar um usuário pelo ID',
   })
@@ -63,6 +65,8 @@ export class UserController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Editar um usuário pelo ID',
   })
@@ -71,6 +75,8 @@ export class UserController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary: 'Remover um usuário pelo ID',
