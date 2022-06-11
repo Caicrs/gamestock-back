@@ -44,14 +44,9 @@ export class GamesController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Visualizar o game selecionado | APENAS ADMINS',
+    summary: 'Visualizar o game selecionado ',
   })
   findOne(@Param('id') id: string, @LoggedUser() user: User): Promise<Games> {
-    const ability = this.caslAbilityFactory.createForUser(user);
-    const isAllowed = ability.can(Action.Create, user);
-    if (!isAllowed) {
-      throw new ForbiddenException('Apenas ADMINS');
-    }
     return this.gamesService.findById(id);
   }
 
