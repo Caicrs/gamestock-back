@@ -1,8 +1,18 @@
 module.exports = {
+  source: '/:path*',
+  headers: [
+    { key: 'Acess-Control-Allow-Credentials', value: 'true' },
+    { key: 'Acess-Control-ALlow-Origin', value: '*' },
+    {
+      key: 'Acess-Control-Allow-Methods',
+      value: 'GET, OPTIONS, PATCH, DELETE, POST, PUT',
+    },
+    { key: 'Acess-Control-Allow-Headers', value: 'Accept' },
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',
-    tsconfigRootDir : __dirname, 
+    tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint/eslint-plugin'],

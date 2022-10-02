@@ -1,10 +1,16 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule,{
+    cors:true,
+  });
+  app.enableCors();
+   // Para conseguir pegar o protocolo https
+   app.set('trust proxy', 1);
 
   app.useGlobalPipes(new ValidationPipe());
 
