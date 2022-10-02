@@ -24,9 +24,6 @@ import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 import { Action } from 'src/casl/enum';
 
 @ApiTags('games')
-@UseGuards(AuthGuard())
-@UseGuards(RolesGuard)
-@ApiBearerAuth()
 @Controller('games')
 export class GamesController {
   constructor(
@@ -51,6 +48,8 @@ export class GamesController {
   }
 
   @Post()
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Criar um novo game | APENAS ADMINS',
   })
@@ -64,6 +63,8 @@ export class GamesController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Editar o game selecionado | APENAS ADMINS',
   })
@@ -82,6 +83,8 @@ export class GamesController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Remover o game selecionado | APENAS ADMINS',
   })
