@@ -43,7 +43,7 @@ export class GamesController {
   @ApiOperation({
     summary: 'Visualizar o game selecionado ',
   })
-  findOne(@Param('id') id: string, @LoggedUser() user: User): Promise<Games> {
+  findOne(@Param('id') id: string): Promise<Games> {
     return this.gamesService.findById(id);
   }
 
