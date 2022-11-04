@@ -75,7 +75,6 @@ export class UserController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard())
   @ApiBearerAuth()
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
