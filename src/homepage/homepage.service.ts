@@ -29,23 +29,12 @@ export class HomepageService {
       },
     });
 
-    const allGames = await this.prisma.games.findMany({
-      select: {
-        id: true,
-        Title: true,
-        CoverImageUrl: true,
-        Description: true,
-        Year: true,
-        ImdbScore: true,
-        TrailerYouTubeUrl: true,
-        GameplayYouTubeUrl: true,
-      },
-    });
+   
 
     if (!record) {
       throw new NotFoundException(`Registro com o ID '${id}' não encontrado.`);
     }
 
-    return [record, allGames];
+    return [record];
   }
 }
