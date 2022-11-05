@@ -25,7 +25,7 @@ export class HomepageController {
     summary: 'Visualizar Homepage',
   })
   @Get()
-  findOne(@LoggedUser() user: User) {
-    return this.homepageService.findById(user.id);
+  findOne(@Param('id') id: string) {
+    return this.homepageService.findById(id);
   }
 }
