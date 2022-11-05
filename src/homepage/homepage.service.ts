@@ -35,6 +35,6 @@ export class HomepageService {
       throw new NotFoundException(`Registro com o ID '${id}' não encontrado.`);
     }
 
-    return [record];
+    return record;
   }
 }
