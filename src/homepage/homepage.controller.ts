@@ -14,7 +14,6 @@ import { Action } from 'src/casl/enum';
 import { HomepageService } from './homepage.service';
 
 @ApiTags('homepage')
-@UseGuards(AuthGuard())
 @ApiBearerAuth()
 @Controller('homepage')
 export class HomepageController {
