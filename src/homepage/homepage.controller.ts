@@ -11,9 +11,11 @@ import { User } from '@prisma/client';
 import { LoggedUser } from 'src/auth/logged-user-decorator';
 import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 import { Action } from 'src/casl/enum';
+import { Homepage } from './entities/homepage.entity';
 import { HomepageService } from './homepage.service';
 
 @ApiTags('homepage')
+@UseGuards(AuthGuard())
 @ApiBearerAuth()
 @Controller('homepage')
 export class HomepageController {
@@ -24,7 +26,8 @@ export class HomepageController {
     summary: 'Visualizar Homepage',
   })
   @Get()
-  findOne(@Param('id') id: string) {
-    return this.homepageService.findById(id);
+  findOne(@LoggedUser() user: User) {
+    console.log(user)
+    return this.homepageService.findById(user.id);
   }
 }
