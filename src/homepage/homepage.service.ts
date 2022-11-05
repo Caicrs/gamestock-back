@@ -11,7 +11,9 @@ export class HomepageService {
       select: {
         Profiles: {
           select: {
+            id: true,
             Title: true,
+            ImageUrl:true,
             ProfileGames: {
               select: {
                 Games: {
