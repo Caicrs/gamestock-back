@@ -21,13 +21,12 @@ import { HomepageService } from './homepage.service';
 export class HomepageController {
   constructor(private readonly homepageService: HomepageService) {}
 
-  @Get()
+  @Get(':id')
   @ApiOperation({
     summary: 'Visualizar Homepage',
   })
-  @Get()
-  findOne(@LoggedUser() user: User) {
-    console.log(user)
-    return this.homepageService.findById(user.id);
+  findOne(@Param('id')id: string) {
+    console.log(id)
+    return this.homepageService.findById(id);
   }
 }
