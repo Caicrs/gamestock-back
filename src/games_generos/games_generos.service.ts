@@ -40,7 +40,9 @@ export class GamesGenerosService {
       select: {
         id: true,
         GamesId: true,
+        Games: { select: { Title: true } },
         GenerosId: true,
+        Generos: { select: { Name: true } },
       },
     });
 

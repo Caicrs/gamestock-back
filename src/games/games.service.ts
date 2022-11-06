@@ -24,7 +24,13 @@ export class GamesService {
     TrailerYouTubeUrl: true,
     GameplayYouTubeUrl: true,
     ProfileGames: true,
-    GamesGeneros: true,
+    GamesGeneros: {
+      select: {
+        id: true,
+        GenerosId: true,
+        Generos: { select: { Name: true } },
+      },
+    },
   };
 
   findAll() {
